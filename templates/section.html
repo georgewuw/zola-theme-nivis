@@ -20,7 +20,6 @@ config.title }}{% endblock title %} {% block head %}
 {% set taxonomy_section_enabled = config.extra.sections.tags | default(value=true) %}
 {% set content_lang = config.extra.content_lang | default(value="", boolean=true) %}
 <main class="article-list">
-  <div class="ad">{% block ad1 %} {% endblock ad1 %}</div>
   <article class="article-block title-block">
     <h2 class="heading">{{ section.title }}</h2>
     <aside class="page">
@@ -35,8 +34,6 @@ config.title }}{% endblock title %} {% block head %}
   section.extra.pinned_posts and post.relative_path in
   section.extra.pinned_posts %} {% continue %} {% endif %}
   {{<article_block post={post} taxonomy_mode={taxonomy_mode} taxonomy_enabled={taxonomy_section_enabled} content_lang={content_lang}/>}} {% endfor %}
-
-  <div class="ad">{% block ad2 %} {% endblock ad2 %}</div>
 
   <div class="pagination-footer">
     {% if paginator.previous %}

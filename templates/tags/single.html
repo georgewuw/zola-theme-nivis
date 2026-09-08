@@ -20,7 +20,6 @@
 {% set taxonomy_section_enabled = config.extra.sections.tags | default(value=true) %}
 {% if taxonomy_section_enabled and taxonomy_mode != "none" %}
 <main class="article-list">
-  <div class="ad">{% block ad1 %} {% endblock ad1 %}</div>
   <article class="article-block title-block">
     <h2 class="heading">{% if taxonomy_mode == "tags" %}<span class="hash">#</span>{% endif %}{{ term.name }}</h2>
     <aside class="page">
@@ -30,8 +29,6 @@
   {% set content_lang = config.extra.content_lang | default(value="", boolean=true) %}
   {% for post in paginator.pages %} {{<article_block post={post} taxonomy_mode={taxonomy_mode} taxonomy_enabled={taxonomy_section_enabled} content_lang={content_lang}/>}} {%
   endfor %}
-
-  <div class="ad">{% block ad2 %} {% endblock ad2 %}</div>
 
   <div class="pagination-footer">
     {% if paginator.previous %}

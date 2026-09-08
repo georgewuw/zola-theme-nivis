@@ -152,15 +152,19 @@
         {% block content %}{% endblock content %}
       </div>
     </div>
-    <div class="page-footer">
+    <div class="page-footer{% if current_path == "/" %} home-footer{% endif %}">
       <div class="footer-content">
-        <div class="footer-credit">With theme <a href="https://github.com/Resorie/zola-theme-nivis">Nivis</a><span class="separator">/</span>Powered by <a href="https://www.getzola.org/" target="_blank">Zola</a></div>
-        {% set copyright_holder = config.extra.footer.copyright_holder | default(value="") %}
-        {% if copyright_holder %}
-        {% set current_year = now() | date(format="%Y") %}
-        {% set copyright_since = config.extra.footer.copyright_since | default(value=0) %}
-        {% set copyright_since_text = copyright_since | str %}
-        <div class="footer-copyright">Copyright © {% if copyright_since and copyright_since_text != current_year %}{{ copyright_since }}-{{ current_year }}{% else %}{{ current_year }}{% endif %} <a href="{{ get_url(path="@/_index.md", lang=lang) }}">{{ copyright_holder }}</a></div>
+        {% set footer = config.extra.footer | default(value={}) %}
+        {% set footer_items = footer.items | default(value=[]) %}
+        {% if footer_items %}
+          {% for item in footer_items %}
+            {% if loop.index0 > 0 %}<span class="separator">·</span>{% endif %}
+            {% if item.url %}
+              <a href="{{ item.url | safe }}" target="{{ item.target | default(value="_blank") }}" rel="{{ item.rel | default(value="nofollow noopener noreferrer") }}">{{ item.text }}</a>
+            {% else %}
+              <span>{{ item.text }}</span>
+            {% endif %}
+          {% endfor %}
         {% endif %}
       </div>
     </div>
