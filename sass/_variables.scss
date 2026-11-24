@@ -14,11 +14,14 @@
     --gutter-h: 0px;
     --gutter-h-narrow: 0px;
 
-    @media screen and (max-width: 900px) {
-        --gutter-h: calc((100vw - 600px) / 3);
+    @media screen and (max-width: 960px) {
+        /* Keep the reading column at min(90vw, 40rem): the side margin only
+           grows once the container exceeds the 40rem line-length cap, so the
+           inset stays continuous across breakpoints instead of jumping. */
+        --gutter-h: max(0px, (100vw - 40rem) / 2 - 5vw);
     }
     @media screen and (max-width: 700px) {
-        --gutter-h-narrow: calc((100vw - 400px) / 3);
+        --gutter-h-narrow: var(--gutter-h);
     }
 
     /* Colors */
@@ -53,7 +56,7 @@
 }
 
 @mixin responsive-gutter($prop: padding, $extra: 0px) {
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 960px) {
         #{$prop}-left: calc(var(--gutter-h) + #{$extra});
         #{$prop}-right: var(--gutter-h);
     }

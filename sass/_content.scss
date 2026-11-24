@@ -538,6 +538,12 @@
 }
 
 .content-article .article-content {
+    > .article-header {
+        // Page titles (about/links) follow the same gutter as the body text,
+        // so the heading and content move in together when the sidebar folds.
+        @include responsive-gutter(margin);
+    }
+
     > .description {
         font-family: 'LXGW Bright', serif;
         font-size: 1.1em;
@@ -1022,6 +1028,16 @@
         }
     }
 
+    > pre {
+        // Direct-child code blocks share the reading column; nested ones (e.g.
+        // in a blockquote) are already inset by their parent.
+        @media screen and (max-width: 960px) {
+            width: calc(100% - 2 * var(--gutter-h));
+            margin-left: auto;
+            margin-right: auto;
+        }
+    }
+
     img {
         max-width: 100%;
         height: auto;
@@ -1033,26 +1049,6 @@
             width: calc(100% + 10vw);
             margin-left: -5vw;
             border-radius: unset;
-        }
-    }
-
-    .footnote-definition {
-        @media screen and (max-width: 900px) {
-            padding-left: calc((100vw - 600px)/3);
-            padding-right: calc((100vw - 600px)/3);
-            margin-left: auto;
-            margin-right: auto;
-        }
-
-        @media screen and (max-width: 700px) {
-            padding-left: calc((100vw - 400px)/3);
-            padding-right: calc((100vw - 400px)/3);
-        }
-
-        @media screen and (max-width: 500px) {
-            width: 90vw;
-            padding-left: unset;
-            padding-right: unset;
         }
     }
 
@@ -1103,13 +1099,18 @@
         margin-left: auto;
         margin-right: auto;
 
-        @include responsive-gutter(padding);
+        /* `padding` is ignored on collapsed tables, so inset via width instead
+           to keep the table aligned with the body text. */
+        @media screen and (max-width: 960px) {
+            width: calc(100% - 2 * var(--gutter-h));
+        }
+
+        @media screen and (max-width: 700px) {
+            width: calc(100% - 2 * var(--gutter-h-narrow));
+        }
+
         @media screen and (max-width: 500px) {
             width: 90vw;
-            padding-left: unset;
-            padding-right: unset;
-            margin-left: auto;
-            margin-right: auto;
         }
 
         th {
@@ -1149,11 +1150,10 @@
         margin: var(--space-xl) 0;
         width: 100%;
 
-        @include responsive-gutter(padding);
-        @media screen and (max-width: 500px) {
-            width: 90vw;
-            padding-left: unset;
-            padding-right: unset;
+        /* Inset via width: `padding` would still be painted by the background,
+           leaving the rule wider than the body text. */
+        @media screen and (max-width: 960px) {
+            width: calc(100% - 2 * var(--gutter-h));
             margin-left: auto;
             margin-right: auto;
         }
@@ -1185,11 +1185,44 @@
         font-size: 0.9em;
         color: var(--text-color-light);
 
+        /* Follow the same responsive gutter as paragraphs/headings so the
+           footnote block (and its top rule) never gets wider than body text. */
+        @include responsive-gutter(margin);
+
+        @media screen and (max-width: 500px) {
+            width: 90vw;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
         hr { display: none; }
         ol { padding-left: 1.5em; }
         li {
             margin-bottom: var(--space-xs);
             scroll-margin-top: calc(var(--topbar-h) + 1rem);
+        }
+
+        // Narrow screens: drop the extra left indent so footnote text aligns
+        // with the surrounding paragraphs instead of leaving a gap on the left.
+        @media screen and (max-width: 700px) {
+            // Direct children only, so lists nested inside a footnote keep
+            // their own markers instead of inheriting the footnote counter.
+            > ol {
+                counter-reset: footnote;
+                margin-left: 0;
+                padding-left: 0;
+                list-style: none;
+
+                > li {
+                    counter-increment: footnote;
+
+                    > p::before {
+                        content: counter(footnote) ". ";
+                        color: var(--text-color);
+                        font-weight: 600;
+                    }
+                }
+            }
         }
     }
 
@@ -1224,6 +1257,9 @@
     margin-bottom: var(--space-xl);
     border-bottom: 1px solid var(--border-color);
     padding-bottom: var(--space-lg);
+
+    /* Align the header block (title, meta, abstract, TOC) with the body text. */
+    @include responsive-gutter(margin);
 
     .intro-header {
         margin-bottom: var(--space-lg);
