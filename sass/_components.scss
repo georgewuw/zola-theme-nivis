@@ -380,8 +380,9 @@
 
 // Archive Timeline Styles
 .timeline-wrapper {
+    --timeline-gutter: 1.5em;
     position: relative;
-    padding-left: 1.5em;
+    padding-left: var(--timeline-gutter);
     margin-top: 2em;
     padding-top: 2em;
     padding-bottom: 0.6em;
@@ -416,7 +417,7 @@
 
 .timeline-end-marker {
     position: absolute;
-    left: calc(-1.5em + 10px);
+    left: calc(-1 * var(--timeline-gutter) + 10px);
     top: calc(0.45em + 0.72em);
     width: 2px;
     height: 0.72em;
@@ -455,7 +456,7 @@
     &::before {
         content: "";
         position: absolute;
-        left: calc(-1.5em + 4px);
+        left: calc(-1 * var(--timeline-gutter) + 4px);
         width: 14px;
         height: 14px;
         background-color: var(--bg-color);
@@ -492,7 +493,7 @@
     &::before {
         content: "";
         position: absolute;
-        left: calc(-1.5em + 11px);
+        left: calc(-1 * var(--timeline-gutter) + 11px);
         top: 0.6em;
         width: 1em;
         height: 1px;
@@ -503,7 +504,7 @@
     &::after {
         content: "";
         position: absolute;
-        left: calc(-1.5em + 7px);
+        left: calc(-1 * var(--timeline-gutter) + 7px);
         top: 0.45em;
         width: 8px;
         height: 8px;
@@ -564,7 +565,7 @@
 // Responsive adjustments
 @media screen and (max-width: 700px) {
     .timeline-wrapper {
-        padding-left: 1em;
+        --timeline-gutter: 1em;
     }
 
     .timeline-post-item {
