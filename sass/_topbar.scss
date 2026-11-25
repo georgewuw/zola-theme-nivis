@@ -1,3 +1,5 @@
+@use 'variables' as *;
+
 .page-top {
   width: 100%;
   position: fixed;
@@ -13,7 +15,7 @@
   align-items: center;
   padding: 0 4vw;
 
-  @media screen and (max-width: 960px) {
+  @media screen and (max-width: #{$sidebar-breakpoint}) {
     padding: 0 20px;
   }
 
@@ -23,7 +25,7 @@
     align-items: center;
     height: 100%;
 
-    @media screen and (max-width: 960px) {
+    @media screen and (max-width: #{$sidebar-breakpoint}) {
         display: none;
     }
 
@@ -168,7 +170,7 @@
     .avatar_btn {
         display: none;
         font-size: 1.2rem;
-        @media screen and (max-width: 960px) {
+        @media screen and (max-width: #{$sidebar-breakpoint}) {
             display: flex;
         }
     }

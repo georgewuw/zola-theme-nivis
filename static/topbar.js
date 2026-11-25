@@ -1,6 +1,12 @@
 const sidebar = document.getElementById("sidebar");
 const sidebarToggle = document.getElementById("sidebar-toggle");
-const mobileSidebar = window.matchMedia("(max-width: 960px)");
+// Keep in sync with `$sidebar-breakpoint` in sass/_variables.scss, which
+// exposes the value as the `--sidebar-breakpoint` custom property.
+const sidebarBreakpoint =
+  getComputedStyle(document.documentElement)
+    .getPropertyValue("--sidebar-breakpoint")
+    .trim() || "1080px";
+const mobileSidebar = window.matchMedia(`(max-width: ${sidebarBreakpoint})`);
 const feedButton = document.querySelector(".feed-icon");
 const feedDropdown = document.getElementById("feed-dropdown");
 const feedContainer = document.querySelector(".feed_btn");

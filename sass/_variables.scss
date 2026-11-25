@@ -1,3 +1,10 @@
+// Viewport width at which the sidebar folds into an off-canvas drawer and the
+// article column switches from the 58.333% right column to the centred
+// single-column layout. Keep this as the only place the value is written:
+// every matching media query uses it, and `--sidebar-breakpoint` below lets
+// topbar.js read it at runtime.
+$sidebar-breakpoint: 1080px;
+
 :root {
     color-scheme: light dark;
 
@@ -11,10 +18,13 @@
 
     /* Layout */
     --topbar-h: 4rem;
+    /* Mirrors $sidebar-breakpoint for topbar.js; media queries cannot use
+       custom properties, so the Sass variable stays the source of truth. */
+    --sidebar-breakpoint: #{$sidebar-breakpoint};
     --gutter-h: 0px;
     --gutter-h-narrow: 0px;
 
-    @media screen and (max-width: 960px) {
+    @media screen and (max-width: #{$sidebar-breakpoint}) {
         /* Keep the reading column at min(90vw, 40rem): the side margin only
            grows once the container exceeds the 40rem line-length cap, so the
            inset stays continuous across breakpoints instead of jumping. */
@@ -56,7 +66,7 @@
 }
 
 @mixin responsive-gutter($prop: padding, $extra: 0px) {
-    @media screen and (max-width: 960px) {
+    @media screen and (max-width: #{$sidebar-breakpoint}) {
         #{$prop}-left: calc(var(--gutter-h) + #{$extra});
         #{$prop}-right: var(--gutter-h);
     }
