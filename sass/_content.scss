@@ -1002,11 +1002,7 @@
     > pre {
         // Direct-child code blocks share the reading column; nested ones (e.g.
         // in a blockquote) are already inset by their parent.
-        @media screen and (max-width: #{$sidebar-breakpoint}) {
-            width: calc(100% - 2 * var(--gutter-h));
-            margin-left: auto;
-            margin-right: auto;
-        }
+        @include responsive-reading-column;
     }
 
     img {
@@ -1076,13 +1072,7 @@
 
         /* `padding` is ignored on collapsed tables, so inset via width instead
            to keep the table aligned with the body text. */
-        @media screen and (max-width: #{$sidebar-breakpoint}) {
-            width: calc(100% - 2 * var(--gutter-h));
-        }
-
-        @media screen and (max-width: 700px) {
-            width: calc(100% - 2 * var(--gutter-h-narrow));
-        }
+        @include responsive-reading-column;
 
         @media screen and (max-width: 500px) {
             width: 90vw;
@@ -1127,11 +1117,7 @@
 
         /* Inset via width: `padding` would still be painted by the background,
            leaving the rule wider than the body text. */
-        @media screen and (max-width: #{$sidebar-breakpoint}) {
-            width: calc(100% - 2 * var(--gutter-h));
-            margin-left: auto;
-            margin-right: auto;
-        }
+        @include responsive-reading-column;
     }
 
     .footnote-definition {
