@@ -1046,6 +1046,23 @@
         margin: 0 auto;
 
         @media screen and (max-width: 500px) {
+            // Full-bleed on narrow screens: the article body is inset by 5vw
+            // on each side, so widen the image by that inset and pull it back
+            // with a negative margin. `max-width` has to be raised here too,
+            // otherwise the base 100% cap clamps the width back to the text
+            // column and the negative margin just shifts the image left.
+            max-width: 100vw;
+            width: calc(100% + 10vw);
+            margin-left: -5vw;
+            border-radius: unset;
+        }
+    }
+
+    // The figure rule above sets its own `max-width`, so it needs the same
+    // full-bleed override to keep images wrapped in a figure centred.
+    @media screen and (max-width: 500px) {
+        > figure > img {
+            max-width: 100vw;
             width: calc(100% + 10vw);
             margin-left: -5vw;
             border-radius: unset;
