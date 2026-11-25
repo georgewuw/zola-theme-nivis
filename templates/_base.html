@@ -86,12 +86,6 @@
         {% endfor %}
       </ul>
 
-      {% if config.extra.sections.about | default(value=true) %}
-      <div class="sidebar-action">
-        <a href="{{ get_url(path="@/about/index.md", lang=lang) }}">About Me</a>
-      </div>
-      {% endif %}
-
       <nav class="sidebar-nav">
         <a href="{{ get_url(path="@/_index.md", lang=lang) }}">Home</a>
 

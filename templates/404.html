@@ -57,11 +57,6 @@
                 {% endfor %}
             </ul>
             {% endif %}
-            {% if config.extra.sections.about | default(value=true) %}
-            <div class="sidebar-action">
-                <a href="{{ config.base_url | safe }}/about/">About Me</a>
-            </div>
-            {% endif %}
             <nav class="sidebar-nav">
                 <a href="{{ config.base_url | safe }}">Home</a>
                 {% if config.extra.sections.posts | default(value=true) %}
