@@ -7,8 +7,9 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex, noai, noimageai">
   <title>{% block title %}{{ config.title }}{% endblock title %}</title>
-  <link rel="icon" href="{{ get_url(path='images/favicon.ico') }}">
+  <link rel="icon" href="{{ get_url(path='images/favicon.svg') }}" type="image/svg+xml">
 
   {% block feed_link %}
   {% if config.generate_feeds %}
