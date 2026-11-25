@@ -199,10 +199,6 @@
     margin-bottom: 4em;
 
     @include responsive-gutter(padding);
-    @media screen and (max-width: 900px) {
-        margin-left: auto;
-        margin-right: auto;
-    }
 
     @media screen and (max-width: 500px) {
         width: 90vw;
