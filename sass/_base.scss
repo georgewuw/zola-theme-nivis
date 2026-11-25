@@ -191,6 +191,34 @@ hr {
   animation-duration: 1s;
 }
 
+/* Theme switch (see `toggleTheme` in topbar.js):
+   `topbar.js` animates the clip-path of the incoming snapshot, so the stock
+   cross-fade must be replaced by that reveal — the outgoing snapshot stays
+   fully visible underneath until the circle covers it. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* Fallback for browsers without the View Transitions API: cross-fade the
+   colours of every element while the scheme flips. Scoped to
+   `no-preference` so it never outranks the reduced-motion reset below. */
+@media (prefers-reduced-motion: no-preference) {
+  html.theme-fade,
+  html.theme-fade *,
+  html.theme-fade *::before,
+  html.theme-fade *::after {
+    transition:
+      background-color 380ms ease,
+      color 380ms ease,
+      border-color 380ms ease,
+      box-shadow 380ms ease,
+      fill 380ms ease,
+      stroke 380ms ease !important;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

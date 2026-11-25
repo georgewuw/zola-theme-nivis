@@ -5,7 +5,7 @@
         </div>
         {% include "_search.html" %}
         <div class="theme_btn">
-          <button type="button" class="icon-button" onclick="toggleTheme()" aria-label="Toggle theme" title="Toggle theme" aria-pressed="false"><i class="fas fa-moon" id="theme-icon" aria-hidden="true"></i></button>
+          <button type="button" class="icon-button" onclick="toggleTheme(event)" aria-label="Toggle theme" title="Toggle theme" aria-pressed="false"><i class="fas fa-moon" id="theme-icon" aria-hidden="true"></i></button>
         </div>
         {% if config.generate_feeds and ("atom.xml" in config.feed_filenames or "rss.xml" in config.feed_filenames) %}
         <div class="feed_btn">

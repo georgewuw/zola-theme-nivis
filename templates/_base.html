@@ -29,8 +29,8 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/lxgwwenkaibright@2.0.0/dist/LXGWBright-Regular/result.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@chinese-fonts/syst@3.0.0/dist/SourceHanSerifCN/result.css">
   {% if config.markdown.highlighting.style == "class" %}
-  <link rel="stylesheet" href="{{ get_url(path='giallo-dark.css') }}" media="(prefers-color-scheme: dark)">
-  <link rel="stylesheet" href="{{ get_url(path='giallo-light.css') }}" media="(prefers-color-scheme: light)">
+  <link rel="stylesheet" id="highlight-dark" href="{{ get_url(path='giallo-dark.css') }}" media="(prefers-color-scheme: dark)">
+  <link rel="stylesheet" id="highlight-light" href="{{ get_url(path='giallo-light.css') }}" media="(prefers-color-scheme: light)">
   {% endif %}
   <link rel="stylesheet" href="{{ get_url(path="style.css") }}">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
@@ -38,9 +38,14 @@
   <script>
     (function() {
       const savedTheme = localStorage.getItem("theme");
-      if (savedTheme) {
-        document.documentElement.style.colorScheme = savedTheme;
-      }
+      if (!savedTheme) return;
+      document.documentElement.style.colorScheme = savedTheme;
+      // Pin the class-based syntax highlighting to the saved scheme too, so
+      // code blocks never load in the opposite theme (topbar.js keeps this
+      // in sync once it takes over the toggle).
+      const opposite = savedTheme === "dark" ? "light" : "dark";
+      document.getElementById("highlight-" + savedTheme)?.setAttribute("media", "all");
+      document.getElementById("highlight-" + opposite)?.setAttribute("media", "not all");
     })();
   </script>
 

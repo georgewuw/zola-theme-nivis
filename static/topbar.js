@@ -104,14 +104,80 @@ function updateThemeIcon(scheme) {
   }
 }
 
-function toggleTheme() {
+/* Class-based syntax highlighting ships one stylesheet per scheme, picked by
+   a `prefers-color-scheme` media query. Once the visitor has chosen a scheme
+   explicitly, the choice must win over the OS setting, so flip the links. */
+function applyHighlightScheme(scheme) {
+  const themes = { dark: "highlight-dark", light: "highlight-light" };
+  for (const [name, id] of Object.entries(themes)) {
+    const link = document.getElementById(id);
+    if (link) link.media = name === scheme ? "all" : "not all";
+  }
+}
+
+function applyTheme(scheme) {
+  document.documentElement.style.colorScheme = scheme;
+  localStorage.setItem("theme", scheme);
+  updateThemeIcon(scheme);
+  applyHighlightScheme(scheme);
+}
+
+/* Fallback for browsers without the View Transitions API: let every colour in
+   the page cross-fade for a moment (`html.theme-fade` in the stylesheet). */
+function fadeTheme(scheme) {
+  const root = document.documentElement;
+  root.classList.add("theme-fade");
+  applyTheme(scheme);
+  window.setTimeout(() => root.classList.remove("theme-fade"), 400);
+}
+
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+const themeRevealMs = 520;
+
+/* Reveal the new scheme as a circle growing out of the toggle button, so the
+   switch reads as one gesture instead of a hard repaint. */
+function revealTheme(button, scheme) {
+  const rect = button.getBoundingClientRect();
+  const x = rect.left + rect.width / 2;
+  const y = rect.top + rect.height / 2;
+  const radius = Math.hypot(
+    Math.max(x, window.innerWidth - x),
+    Math.max(y, window.innerHeight - y),
+  );
+
+  const transition = document.startViewTransition(() => applyTheme(scheme));
+  transition.ready
+    .then(() => {
+      document.documentElement.animate(
+        {
+          clipPath: [
+            `circle(0px at ${x}px ${y}px)`,
+            `circle(${radius}px at ${x}px ${y}px)`,
+          ],
+        },
+        {
+          duration: themeRevealMs,
+          easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+          pseudoElement: "::view-transition-new(root)",
+        },
+      );
+    })
+    .catch(() => {});
+}
+
+function toggleTheme(event) {
   const root = document.documentElement;
   const effectiveScheme = root.style.colorScheme || getPreferredScheme();
   const targetScheme = effectiveScheme === 'dark' ? 'light' : 'dark';
+  const button = event?.currentTarget ?? document.querySelector(".theme_btn .icon-button");
 
-  root.style.colorScheme = targetScheme;
-  localStorage.setItem("theme", targetScheme);
-  updateThemeIcon(targetScheme);
+  if (reduceMotion.matches) {
+    applyTheme(targetScheme);
+  } else if (document.startViewTransition && button) {
+    revealTheme(button, targetScheme);
+  } else {
+    fadeTheme(targetScheme);
+  }
 }
 
 // Initialize theme icon

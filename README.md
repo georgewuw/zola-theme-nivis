@@ -6,6 +6,8 @@ Nivis is a clean, responsive [Zola](https://www.getzola.org/) theme for personal
 
 [Example site](https://resorie.xyz/zola-theme-nivis/) | [Resory's blog](https://blog.resorie.xyz/)
 
+> **Fork note:** this fork drops the bundled demo site (its `content/`, demo `config.toml`, example `data/` and GitHub Pages workflow). Only the theme itself — `templates/`, `sass/`, `static/`, `syntaxes/` — is kept.
+
 > **AIGC disclosure:** Parts of this documentation were drafted with AIGC assistance and subsequently checked against the theme source and a local Zola build.
 
 Nivis is inspired by and derived from [Float](https://float-theme.netlify.app/) and [anatole](https://longfangsong.github.io/).
@@ -52,14 +54,9 @@ taxonomy_mode = "tags"
 social_links = []
 ```
 
-For a new, otherwise empty site, copy the example content and link data:
+This fork ships no demo site: `content/`, the demo `config.toml`, example `data/` and the GitHub Pages workflow have been removed, so the theme only provides `templates/`, `sass/`, `static/` and `syntaxes/`. Create your own `content/` with the sections you need (`_index.md`, `posts/_index.md`, optionally `about/`, `archive/`, `links/`).
 
-```bash
-cp -R themes/nivis/content/. content/
-cp -R themes/nivis/data/. data/
-```
-
-Read the example site's [Getting Started guide](https://resorie.xyz/zola-theme-nivis/posts/get-start/) for the complete configuration, required content structure, local preview, and update instructions.
+Read the upstream example site's [Getting Started guide](https://resorie.xyz/zola-theme-nivis/posts/get-start/) for the complete configuration, required content structure, local preview, and update instructions.
 
 ## Configuration Highlights
 
@@ -92,7 +89,7 @@ copyright_since = 2025
 
 ## Components
 
-Nivis provides `image` and `collapse` components for Markdown content. Their parameters and rendered examples are documented on the example site after completing the Getting Started guide.
+Nivis provides `image` and `collapse` components for Markdown content. Their parameters and rendered examples are documented in the upstream theme documentation.
 
 ## Todo
 
