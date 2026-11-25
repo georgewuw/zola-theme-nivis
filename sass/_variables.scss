@@ -75,3 +75,20 @@ $sidebar-breakpoint: 1080px;
         #{$prop}-right: var(--gutter-h-narrow);
     }
 }
+
+/* Like `responsive-gutter`, but insets the element by shrinking its width
+   instead of adding padding. Use it for blocks that paint an edge (the
+   heading's bottom border, for instance): padding would leave the edge
+   running on into the gutter, so it would be wider than the body text. */
+@mixin responsive-reading-column {
+    @media screen and (max-width: #{$sidebar-breakpoint}) {
+        width: calc(100% - 2 * var(--gutter-h));
+        margin-left: var(--gutter-h);
+        margin-right: var(--gutter-h);
+    }
+    @media screen and (max-width: 700px) {
+        width: calc(100% - 2 * var(--gutter-h-narrow));
+        margin-left: var(--gutter-h-narrow);
+        margin-right: var(--gutter-h-narrow);
+    }
+}

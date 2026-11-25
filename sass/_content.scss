@@ -583,16 +583,12 @@
             letter-spacing: -2px;
         }
 
-        @include responsive-gutter(padding);
-        @media screen and (max-width: 900px) {
-            margin-left: auto;
-            margin-right: auto;
-        }
+        /* The dashed rule is part of the box, so inset via width rather than
+           padding to keep it the same length as the body text. */
+        @include responsive-reading-column;
 
         @media screen and (max-width: 500px) {
             width: 90vw;
-            padding-left: unset;
-            padding-right: unset;
         }
     }
 
@@ -613,16 +609,11 @@
             letter-spacing: -2px;
         }
 
-        @include responsive-gutter(padding);
-        @media screen and (max-width: 900px) {
-            margin-left: auto;
-            margin-right: auto;
-        }
+        /* Same as h2: the bottom rule must match the body-text width. */
+        @include responsive-reading-column;
 
         @media screen and (max-width: 500px) {
             width: 90vw;
-            padding-left: unset;
-            padding-right: unset;
         }
     }
 
